@@ -1,0 +1,15 @@
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Node (if ever needed for tooling)
+node_modules/
+
+# Compiled translation files are generated, but we track them for distribution
+# *.mo
