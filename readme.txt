@@ -2,55 +2,89 @@
 Contributors: otokichi3
 Tags: monitoring, uptime, performance, dashboard, slow-query
 Requires at least: 6.0
-Tested up to: 6.7
+Tested up to: 6.9
 Requires PHP: 7.4
 Stable tag: 0.1.0
 License: GPL-2.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-Lightweight site monitoring — page uptime, response time, DB performance, and slow query detection with a built-in dashboard. No external service required.
+Internal site monitoring for WordPress. Checks page uptime, DB performance, and slow queries.
 
 == Description ==
 
-WP Site Pulse monitors your WordPress site health from the inside. No external SaaS needed — everything runs within WordPress using WP-Cron.
+WP Site Pulse is a monitoring plugin that runs entirely inside WordPress. It checks your pages and database on a schedule using WP-Cron and shows the results on a dashboard in wp-admin. When something goes wrong, it sends you an email.
 
-**Features:**
+No external monitoring service or API key required.
 
-* **Page Uptime Monitoring** — Periodically checks registered pages for HTTP status and response time.
-* **DB Performance Monitoring** — Runs fixed CRUD test queries and records execution time.
-* **Slow Query Detection** — Logs queries exceeding 500ms (requires `SAVEQUERIES`).
-* **Email Alerts** — Notifies the site admin when a page goes down, responds slowly, or DB performance degrades.
-* **Built-in Dashboard** — View all metrics, charts, and alert history from wp-admin.
+**What it monitors:**
 
-**Why WP Site Pulse?**
+* Page HTTP status and response time (including login-required pages)
+* DB read/write performance via test queries (SELECT, INSERT, UPDATE, DELETE)
+* Slow queries (requires `SAVEQUERIES` to be enabled)
+* DB health indicators: autoload option size, expired transients, post revision bloat
 
-Most monitoring plugins require an external service or subscription. WP Site Pulse works entirely within your WordPress installation — ideal for shared hosting (e.g., XServer) where you can't install server-level monitoring tools.
+**Alerts:**
+
+The plugin sends email alerts when a page returns an error, responds too slowly, or a DB test query fails. You can choose which alert types to enable, and duplicate alerts are suppressed for 1 hour.
+
+**Dashboard:**
+
+The admin dashboard shows an overall site health indicator, then breaks down into page monitoring and DB status. Each section has charts (powered by Chart.js), error logs, and detail views.
+
+= External Services =
+
+This plugin loads Chart.js from jsDelivr CDN on the admin dashboard page only. No site data is sent externally.
+
+* `https://cdn.jsdelivr.net/npm/chart.js@4/dist/chart.umd.min.js`
+* `https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns@3/dist/chartjs-adapter-date-fns.bundle.min.js`
+* [jsDelivr Terms of Use](https://www.jsdelivr.com/terms) / [Privacy Policy](https://www.jsdelivr.com/privacy-policy-jsdelivr-net)
 
 == Installation ==
 
 1. Upload the `wp-site-pulse` folder to `/wp-content/plugins/`.
-2. Activate the plugin through the "Plugins" menu in WordPress.
-3. Go to "Site Pulse" in the admin menu to view the dashboard.
+2. Activate the plugin.
+3. Open "Site Pulse" in the admin menu.
+4. Go to "Site Pulse > Settings" to add URLs and configure alerts.
 
-For reliable cron execution, set up a server-side cron job to hit `wp-cron.php` every 15 minutes:
+WP-Cron depends on site traffic to run. For reliable monitoring, add a server cron:
 
 `*/15 * * * * wget -q -O /dev/null https://yourdomain.com/wp-cron.php?doing_wp_cron`
 
 == Frequently Asked Questions ==
 
-= Does this plugin require an external service? =
+= Does this need an external service? =
 
-No. Everything runs within WordPress. No API keys or subscriptions needed.
+No. Everything runs inside WordPress.
 
-= Will this slow down my site? =
+= Will it slow down my site? =
 
-The monitoring checks run via WP-Cron in the background and do not affect page load for visitors. Slow query detection requires `SAVEQUERIES` which has a performance impact — enable it only when needed.
+Checks run in the background via WP-Cron. Visitors are not affected. Slow query detection uses `SAVEQUERIES` which does add overhead — only enable it when you need it.
 
-= What happens when I uninstall the plugin? =
+= Can it monitor pages that require login? =
 
-All custom tables and stored options are removed cleanly.
+Yes. In Settings, enable authenticated monitoring and pick a user account. The plugin creates temporary auth cookies (valid for 60 seconds) for each check.
+
+= What happens on uninstall? =
+
+All tables and options created by the plugin are deleted.
+
+= How long is data kept? =
+
+Check results are kept for 7 days. Slow query logs and alert history are capped at 100 entries each.
+
+== Screenshots ==
+
+1. Dashboard overview with health indicators.
+2. Page response time chart.
+3. DB saturation gauges with info tooltips.
+4. Settings page.
 
 == Changelog ==
 
+= 0.1.0 (2026-03-19) =
+Initial release.
+
+== Upgrade Notice ==
+
 = 0.1.0 =
-* Initial development version.
+Initial release.

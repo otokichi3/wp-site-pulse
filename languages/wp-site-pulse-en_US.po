@@ -1,0 +1,220 @@
+# English translation for WP Site Pulse
+# Copyright (C) 2026 otokichi3
+# This file is distributed under the GPL-2.0-or-later.
+msgid ""
+msgstr ""
+"Project-Id-Version: WP Site Pulse 0.1.0\n"
+"Report-Msgid-Bugs-To: https://github.com/otokichi3/wp-site-pulse/issues\n"
+"POT-Creation-Date: 2026-03-18 00:00:00+00:00\n"
+"PO-Revision-Date: 2026-03-18 00:00:00+00:00\n"
+"Last-Translator: otokichi3\n"
+"Language-Team: English\n"
+"Language: en_US\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgid "Site Pulse"
+msgstr "Site Pulse"
+
+msgid "Site Pulse ダッシュボード"
+msgstr "Site Pulse Dashboard"
+
+msgid "正常"
+msgstr "Healthy"
+
+msgid "注意"
+msgstr "Warning"
+
+msgid "異常"
+msgstr "Critical"
+
+msgid "サイト全体"
+msgstr "Overall"
+
+msgid "ページ監視"
+msgstr "Page Monitor"
+
+msgid "データベース"
+msgstr "Database"
+
+msgid "稼働状況"
+msgstr "Availability"
+
+msgid "CRUD テスト"
+msgstr "CRUD Test"
+
+msgid "ページ監視 — 詳細"
+msgstr "Page Monitor — Details"
+
+msgid "応答時間"
+msgstr "Response Time"
+
+msgid "データベース — 詳細"
+msgstr "Database — Details"
+
+msgid "CRUD パフォーマンス"
+msgstr "CRUD Performance"
+
+msgid "%1$d / %2$d 正常"
+msgstr "%1$d / %2$d OK"
+
+msgid "DB 状態"
+msgstr "DB Status"
+
+msgid "エラー率 (24h)"
+msgstr "Error Rate (24h)"
+
+msgid "スロークエリ (24h)"
+msgstr "Slow Queries (24h)"
+
+msgid "%d 件検出"
+msgstr "%d found"
+
+msgid "ページ応答時間"
+msgstr "Page Response Time"
+
+msgid "DB パフォーマンス"
+msgstr "DB Performance"
+
+msgid "DB 飽和度"
+msgstr "DB Saturation"
+
+msgid "Autoload サイズ"
+msgstr "Autoload Size"
+
+msgid "Autoload オプション数"
+msgstr "Autoload Options"
+
+msgid "期限切れトランジェント"
+msgstr "Expired Transients"
+
+msgid "リビジョン倍率"
+msgstr "Revision Ratio"
+
+msgid "%1$sx（%2$s件 / 投稿%3$s件）"
+msgstr "%1$sx (%2$s revisions / %3$s posts)"
+
+msgid "wp_options の autoload=yes のデータ合計サイズ。全ページ読み込み時に毎回メモリに展開されるため、大きいほどサイト全体が遅くなります。800KB以下が理想、1.5MB超は不要なオプションの autoload 解除やプラグインの見直しが必要です。"
+msgstr "Total size of wp_options rows with autoload=yes. This data is loaded into memory on every page load, so larger values slow down the entire site. Ideal: under 800KB. Over 1.5MB: review plugins and disable unnecessary autoload options."
+
+msgid "autoload=yes が設定された wp_options の行数。行儀の悪いプラグインが大量に登録しがちです。500以下が理想、1,000超の場合は各プラグインの autoload 設定を確認してください。"
+msgstr "Number of wp_options rows with autoload=yes. Poorly-coded plugins tend to register many. Ideal: under 500. Over 1,000: review each plugin's autoload settings."
+
+msgid "有効期限が切れたまま wp_options に残っている一時データの数。通常は WP-Cron が自動削除しますが、cron が正常に動いていないと溜まり続けます。0が理想で、増え続ける場合はサーバーの cron 設定を確認してください。"
+msgstr "Number of expired transients still in wp_options. WP-Cron normally cleans these up, but they accumulate if cron isn't running properly. Ideal: 0. If increasing, check your server's cron configuration."
+
+msgid "投稿リビジョン数を投稿数で割った値。WordPress は編集のたびにリビジョンを保存するため、wp_posts テーブルが肥大化します。10x以下が理想で、大きい場合は wp-config.php に define('WP_POST_REVISIONS', 5); などで制限できます。"
+msgstr "Revisions divided by posts. WordPress saves a revision on every edit, bloating wp_posts. Ideal: under 10x. To limit, add define('WP_POST_REVISIONS', 5); to wp-config.php."
+
+msgid "スロークエリログ"
+msgstr "Slow Query Log"
+
+msgid "スロークエリは検出されていません。"
+msgstr "No slow queries detected."
+
+msgid "日時"
+msgstr "Time"
+
+msgid "SQL"
+msgstr "SQL"
+
+msgid "実行時間"
+msgstr "Duration"
+
+msgid "呼び出し元"
+msgstr "Caller"
+
+msgid "クエリ統計"
+msgstr "Query Statistics"
+
+msgid "SAVEQUERIES の有効化が必要です。"
+msgstr "Requires SAVEQUERIES to be enabled."
+
+msgid "総クエリ数"
+msgstr "Total Queries"
+
+msgid "アラート履歴"
+msgstr "Alert History"
+
+msgid "アラートはまだ送信されていません。"
+msgstr "No alerts sent."
+
+msgid "種別"
+msgstr "Type"
+
+msgid "対象"
+msgstr "Target"
+
+msgid "メッセージ"
+msgstr "Message"
+
+msgid "監視 URL"
+msgstr "Monitored URLs"
+
+msgid "URL の管理は設定ページから行えます。現在の監視対象:"
+msgstr "Manage URLs in Settings. Currently monitoring:"
+
+msgid "エラーログ"
+msgstr "Error Log"
+
+msgid "直近のエラーはありません。"
+msgstr "No recent errors."
+
+msgid "URL"
+msgstr "URL"
+
+msgid "ステータス"
+msgstr "Status"
+
+msgid "接続エラー"
+msgstr "Connection Error"
+
+msgid "応答時間 (ms)"
+msgstr "Response Time (ms)"
+
+msgid "実行時間 (ms)"
+msgstr "Execution Time (ms)"
+
+msgid "閾値"
+msgstr "Threshold"
+
+msgid "%1$s 接続エラー（連続失敗: %2$d 回）"
+msgstr "%1$s connection error (consecutive failures: %2$d)"
+
+msgid "%1$s が HTTP %2$d を返しました（連続失敗: %3$d 回）"
+msgstr "%1$s returned HTTP %2$d (consecutive failures: %3$d)"
+
+msgid "%1$s の応答時間 %2$dms（閾値: %3$dms）"
+msgstr "%1$s response time %2$dms (threshold: %3$dms)"
+
+msgid "%1$s への DB %2$s クエリが失敗しました"
+msgstr "DB %2$s query on %1$s failed"
+
+msgid "DB 操作 %1$s に %2$dms かかりました（閾値: %3$dms）"
+msgstr "DB operation %1$s took %2$dms (threshold: %3$dms)"
+
+msgid "ページダウン"
+msgstr "Page Down"
+
+msgid "ページ応答遅延"
+msgstr "Page Slow"
+
+msgid "DB 応答遅延"
+msgstr "DB Slow"
+
+msgid "DB エラー"
+msgstr "DB Error"
+
+msgid "サイト"
+msgstr "Site"
+
+msgid "検知日時"
+msgstr "Detected at"
+
+msgid "同一アラートは %d 分間抑制されます。"
+msgstr "Duplicate alerts are suppressed for %d minutes."
+
+msgid "このメールは %1$s の WP Site Pulse プラグインから自動送信されました。"
+msgstr "This email was sent automatically by the WP Site Pulse plugin on %1$s."

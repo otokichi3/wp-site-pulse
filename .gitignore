@@ -13,3 +13,6 @@ node_modules/
 
 # Compiled translation files are generated, but we track them for distribution
 # *.mo
+
+# Build artifacts
+*.zip

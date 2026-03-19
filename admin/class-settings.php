@@ -1,0 +1,151 @@
+<?php
+/**
+ * Settings page.
+ *
+ * @package WP_Site_Pulse
+ */
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
+class WPSP_Settings {
+
+	/**
+	 * Register hooks.
+	 */
+	public static function init() {
+		add_action( 'admin_menu', array( __CLASS__, 'add_submenu' ) );
+		add_action( 'admin_init', array( __CLASS__, 'handle_save' ) );
+		add_action( 'admin_enqueue_scripts', array( __CLASS__, 'enqueue_assets' ) );
+	}
+
+	/**
+	 * Add submenu under Site Pulse.
+	 */
+	public static function add_submenu() {
+		add_submenu_page(
+			'wp-site-pulse',
+			__( '設定', 'wp-site-pulse' ),
+			__( '設定', 'wp-site-pulse' ),
+			'manage_options',
+			'wpsp-settings',
+			array( __CLASS__, 'render' )
+		);
+	}
+
+	/**
+	 * Enqueue settings page CSS (reuse dashboard CSS).
+	 *
+	 * @param string $hook_suffix Current admin page.
+	 */
+	public static function enqueue_assets( $hook_suffix ) {
+		if ( 'site-pulse_page_wpsp-settings' !== $hook_suffix ) {
+			return;
+		}
+
+		wp_enqueue_style(
+			'wpsp-dashboard',
+			WPSP_PLUGIN_URL . 'admin/css/dashboard.css',
+			array(),
+			WPSP_VERSION
+		);
+	}
+
+	/**
+	 * Handle form submission.
+	 */
+	public static function handle_save() {
+		if ( ! isset( $_POST['wpsp_settings_nonce'] ) ) {
+			return;
+		}
+
+		if ( ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['wpsp_settings_nonce'] ) ), 'wpsp_save_settings' ) ) {
+			return;
+		}
+
+		if ( ! current_user_can( 'manage_options' ) ) {
+			return;
+		}
+
+		// Monitored URLs.
+		$raw_urls = isset( $_POST['wpsp_urls'] ) ? sanitize_textarea_field( wp_unslash( $_POST['wpsp_urls'] ) ) : '';
+		$urls     = array_values( array_filter( array_map( 'trim', explode( "\n", $raw_urls ) ) ) );
+		$urls     = array_map( 'esc_url_raw', $urls );
+		$urls     = array_slice( array_filter( $urls ), 0, 10 );
+		update_option( 'wpsp_monitored_urls', $urls );
+
+		// Authenticated monitoring.
+		$auth_enabled = isset( $_POST['wpsp_auth_enabled'] ) ? true : false;
+		update_option( 'wpsp_auth_enabled', $auth_enabled );
+
+		$auth_user_id = isset( $_POST['wpsp_auth_user_id'] ) ? absint( wp_unslash( $_POST['wpsp_auth_user_id'] ) ) : 0;
+		if ( $auth_user_id > 0 ) {
+			$user = get_userdata( $auth_user_id );
+			// Only allow administrators and editors.
+			if ( $user && ( in_array( 'administrator', $user->roles, true ) || in_array( 'editor', $user->roles, true ) ) ) {
+				update_option( 'wpsp_auth_user_id', $auth_user_id );
+			}
+		} else {
+			update_option( 'wpsp_auth_user_id', 0 );
+		}
+
+		// Alert email.
+		$email = isset( $_POST['wpsp_alert_email'] ) ? sanitize_email( wp_unslash( $_POST['wpsp_alert_email'] ) ) : '';
+		update_option( 'wpsp_alert_email', $email );
+
+		// Slow query threshold.
+		$threshold = isset( $_POST['wpsp_slow_query_threshold'] ) ? absint( wp_unslash( $_POST['wpsp_slow_query_threshold'] ) ) : 500;
+		$threshold = max( 100, min( 10000, $threshold ) );
+		update_option( 'wpsp_slow_query_threshold_ms', $threshold );
+
+		// Alert types for email.
+		$all_types    = array( 'page_down', 'page_slow', 'db_slow', 'db_error' );
+		$active_types = array();
+		if ( isset( $_POST['wpsp_alert_types'] ) && is_array( $_POST['wpsp_alert_types'] ) ) {
+			foreach ( wp_unslash( $_POST['wpsp_alert_types'] ) as $type ) { // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- Sanitized on next line.
+				$type = sanitize_text_field( $type );
+				if ( in_array( $type, $all_types, true ) ) {
+					$active_types[] = $type;
+				}
+			}
+		}
+		update_option( 'wpsp_alert_types_email', $active_types );
+
+		add_settings_error( 'wpsp_settings', 'wpsp_saved', __( '設定を保存しました。', 'wp-site-pulse' ), 'success' );
+	}
+
+	/**
+	 * Get current settings with defaults.
+	 *
+	 * @return array
+	 */
+	public static function get_settings() {
+		$urls = get_option( 'wpsp_monitored_urls' );
+		if ( ! is_array( $urls ) || empty( $urls ) ) {
+			$urls = array( home_url( '/' ), rest_url( '/' ) );
+		}
+
+		return array(
+			'urls'                   => $urls,
+			'auth_enabled'           => (bool) get_option( 'wpsp_auth_enabled', false ),
+			'auth_user_id'           => (int) get_option( 'wpsp_auth_user_id', 0 ),
+			'alert_email'            => get_option( 'wpsp_alert_email', get_option( 'admin_email' ) ),
+			'slow_query_threshold'   => (int) get_option( 'wpsp_slow_query_threshold_ms', WPSP_SLOW_QUERY_THRESHOLD_MS ),
+			'alert_types'            => get_option( 'wpsp_alert_types_email', array( 'page_down', 'page_slow', 'db_slow', 'db_error' ) ),
+		);
+	}
+
+	/**
+	 * Render the settings page.
+	 */
+	public static function render() {
+		if ( ! current_user_can( 'manage_options' ) ) {
+			return;
+		}
+
+		$settings = self::get_settings();
+
+		include WPSP_PLUGIN_DIR . 'admin/views/settings.php';
+	}
+}
