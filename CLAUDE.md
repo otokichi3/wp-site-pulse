@@ -1,4 +1,4 @@
-# WP Site Pulse — Development Guide
+# Site Pulse — Development Guide
 
 ## プロジェクト概要
 

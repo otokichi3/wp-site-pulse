@@ -2,7 +2,7 @@
 # This file is distributed under the GPL-2.0-or-later.
 msgid ""
 msgstr ""
-"Project-Id-Version: WP Site Pulse 0.1.0\n"
+"Project-Id-Version: Site Pulse 0.1.0\n"
 "Report-Msgid-Bugs-To: https://github.com/otokichi3/wp-site-pulse/issues\n"
 "POT-Creation-Date: 2026-03-18 00:00:00+00:00\n"
 "MIME-Version: 1.0\n"
@@ -189,5 +189,5 @@ msgid "同一アラートは %d 分間抑制されます。"
 msgstr ""
 
 #: includes/class-alerter.php
-msgid "このメールは %1$s の WP Site Pulse プラグインから自動送信されました。"
+msgid "このメールは %1$s の Site Pulse プラグインから自動送信されました。"
 msgstr ""

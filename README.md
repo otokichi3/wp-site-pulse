@@ -1,4 +1,4 @@
-# WP Site Pulse
+# Site Pulse
 
 WordPress サイトの死活監視・応答速度・DB パフォーマンス・スロークエリを監視する軽量プラグイン。
 外部サービス不要 — WordPress + WP-Cron だけで完結。

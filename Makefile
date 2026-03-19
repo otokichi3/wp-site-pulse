@@ -28,7 +28,7 @@ zip:
 	@echo "wp-site-pulse.zip を作成しました"
 
 help:
-	@echo "WP Site Pulse - Commands"
+	@echo "Site Pulse - Commands"
 	@echo "========================"
 	@echo "  make deploy  - プラグインを WP 環境にコピー"
 	@echo "  make zip     - リリース用 ZIP を作成"

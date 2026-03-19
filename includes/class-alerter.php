@@ -283,7 +283,7 @@ class WPSP_Alerter {
 			<?php
 			printf(
 				/* translators: %1$s: site name */
-				esc_html__( 'このメールは %1$s の WP Site Pulse プラグインから自動送信されました。', 'wp-site-pulse' ),
+				esc_html__( 'このメールは %1$s の Site Pulse プラグインから自動送信されました。', 'wp-site-pulse' ),
 				esc_html( $site_name )
 			);
 			?>

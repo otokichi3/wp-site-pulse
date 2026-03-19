@@ -1,9 +1,9 @@
-# English translation for WP Site Pulse
+# English translation for Site Pulse
 # Copyright (C) 2026 otokichi3
 # This file is distributed under the GPL-2.0-or-later.
 msgid ""
 msgstr ""
-"Project-Id-Version: WP Site Pulse 0.1.0\n"
+"Project-Id-Version: Site Pulse 0.1.0\n"
 "Report-Msgid-Bugs-To: https://github.com/otokichi3/wp-site-pulse/issues\n"
 "POT-Creation-Date: 2026-03-18 00:00:00+00:00\n"
 "PO-Revision-Date: 2026-03-18 00:00:00+00:00\n"
@@ -216,5 +216,5 @@ msgstr "Detected at"
 msgid "同一アラートは %d 分間抑制されます。"
 msgstr "Duplicate alerts are suppressed for %d minutes."
 
-msgid "このメールは %1$s の WP Site Pulse プラグインから自動送信されました。"
-msgstr "This email was sent automatically by the WP Site Pulse plugin on %1$s."
+msgid "このメールは %1$s の Site Pulse プラグインから自動送信されました。"
+msgstr "This email was sent automatically by the Site Pulse plugin on %1$s."

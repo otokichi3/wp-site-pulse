@@ -12,7 +12,7 @@ Internal site monitoring for WordPress. Checks page uptime, DB performance, and 
 
 == Description ==
 
-WP Site Pulse is a monitoring plugin that runs entirely inside WordPress. It checks your pages and database on a schedule using WP-Cron and shows the results on a dashboard in wp-admin. When something goes wrong, it sends you an email.
+Site Pulse is a monitoring plugin that runs entirely inside WordPress. It checks your pages and database on a schedule using WP-Cron and shows the results on a dashboard in wp-admin. When something goes wrong, it sends you an email.
 
 No external monitoring service or API key required.
 
