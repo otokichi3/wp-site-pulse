@@ -9,7 +9,7 @@ DEST           := $(WP_PLUGINS_DIR)/$(PLUGIN_NAME)
 deploy:
 	rm -rf $(DEST)
 	mkdir -p $(DEST)/includes $(DEST)/admin/css $(DEST)/admin/js $(DEST)/admin/views $(DEST)/languages
-	cp wp-site-pulse.php uninstall.php readme.txt $(DEST)/
+	cp site-pulse.php uninstall.php readme.txt $(DEST)/
 	cp includes/*.php $(DEST)/includes/
 	cp admin/*.php $(DEST)/admin/
 	cp admin/views/*.php $(DEST)/admin/views/
@@ -22,7 +22,7 @@ deploy:
 zip:
 	rm -f site-pulse.zip
 	zip -r site-pulse.zip \
-		wp-site-pulse.php uninstall.php readme.txt \
+		site-pulse.php uninstall.php readme.txt \
 		includes/ admin/ languages/ \
 		-x "*/.*" -x "*__MACOSX*"
 	@echo "site-pulse.zip を作成しました"
