@@ -2,7 +2,7 @@
 
 # thaigogym_plus の WP 環境へのパス
 WP_PLUGINS_DIR := ../thaigogym_plus/html/wp-content/plugins
-PLUGIN_NAME    := wp-site-pulse
+PLUGIN_NAME    := site-pulse
 DEST           := $(WP_PLUGINS_DIR)/$(PLUGIN_NAME)
 
 # プラグインを WP プラグインディレクトリにコピー（クリーンコピー）
@@ -20,12 +20,12 @@ deploy:
 
 # リリース用 ZIP を作成
 zip:
-	rm -f wp-site-pulse.zip
-	zip -r wp-site-pulse.zip \
+	rm -f site-pulse.zip
+	zip -r site-pulse.zip \
 		wp-site-pulse.php uninstall.php readme.txt \
 		includes/ admin/ languages/ \
 		-x "*/.*" -x "*__MACOSX*"
-	@echo "wp-site-pulse.zip を作成しました"
+	@echo "site-pulse.zip を作成しました"
 
 help:
 	@echo "Site Pulse - Commands"

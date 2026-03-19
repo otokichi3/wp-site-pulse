@@ -25,9 +25,9 @@ class WPSP_Settings {
 	 */
 	public static function add_submenu() {
 		add_submenu_page(
-			'wp-site-pulse',
-			__( '設定', 'wp-site-pulse' ),
-			__( '設定', 'wp-site-pulse' ),
+			'site-pulse',
+			__( '設定', 'site-pulse' ),
+			__( '設定', 'site-pulse' ),
 			'manage_options',
 			'wpsp-settings',
 			array( __CLASS__, 'render' )
@@ -112,7 +112,7 @@ class WPSP_Settings {
 		}
 		update_option( 'wpsp_alert_types_email', $active_types );
 
-		add_settings_error( 'wpsp_settings', 'wpsp_saved', __( '設定を保存しました。', 'wp-site-pulse' ), 'success' );
+		add_settings_error( 'wpsp_settings', 'wpsp_saved', __( '設定を保存しました。', 'site-pulse' ), 'success' );
 	}
 
 	/**

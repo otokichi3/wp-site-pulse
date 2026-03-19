@@ -41,7 +41,7 @@ This plugin loads Chart.js from jsDelivr CDN on the admin dashboard page only. N
 
 == Installation ==
 
-1. Upload the `wp-site-pulse` folder to `/wp-content/plugins/`.
+1. Upload the `site-pulse` folder to `/wp-content/plugins/`.
 2. Activate the plugin.
 3. Open "Site Pulse" in the admin menu.
 4. Go to "Site Pulse > Settings" to add URLs and configure alerts.

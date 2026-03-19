@@ -9,7 +9,7 @@ WordPress サイトの監視プラグイン。ページ死活・応答速度・D
 - PHP 7.4+（WordPress コーディング規約準拠）
 - WordPress Plugin API（フック、WP-Cron、`$wpdb`、`wp_remote_get`）
 - Chart.js（CDN、管理画面のみ）
-- 国際化: `__()` / `_e()` で日英対応、Text Domain: `wp-site-pulse`
+- 国際化: `__()` / `_e()` で日英対応、Text Domain: `site-pulse`
 
 ## 開発ルール
 
@@ -33,8 +33,8 @@ WordPress サイトの監視プラグイン。ページ死活・応答速度・D
 - 出力: `esc_html()`, `esc_attr()`, `esc_url()` でエスケープ
 
 ### 国際化
-- 翻訳可能な文字列は `__( 'text', 'wp-site-pulse' )` で囲む
-- Text Domain: `wp-site-pulse`
+- 翻訳可能な文字列は `__( 'text', 'site-pulse' )` で囲む
+- Text Domain: `site-pulse`
 - Domain Path: `/languages`
 
 ## 監視の固定閾値

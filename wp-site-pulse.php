@@ -8,7 +8,7 @@
  * Author URI:  https://github.com/otokichi3
  * License:     GPL-2.0-or-later
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
- * Text Domain: wp-site-pulse
+ * Text Domain: site-pulse
  * Domain Path: /languages
  * Requires at least: 6.0
  * Requires PHP: 7.4
@@ -33,7 +33,7 @@ define( 'WPSP_DATA_RETENTION_DAYS', 7 );
 // Load textdomain — only needed for WP < 6.7; newer versions handle this automatically.
 if ( version_compare( get_bloginfo( 'version' ), '6.7', '<' ) ) {
 	add_action( 'init', function () {
-		load_plugin_textdomain( 'wp-site-pulse', false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
+		load_plugin_textdomain( 'site-pulse', false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
 	} );
 }
 
@@ -73,7 +73,7 @@ add_filter( 'cron_schedules', 'wpsp_add_cron_interval' );
 function wpsp_add_cron_interval( $schedules ) {
 	$schedules['wpsp_15min'] = array(
 		'interval' => 15 * MINUTE_IN_SECONDS,
-		'display'  => __( '15分ごと', 'wp-site-pulse' ),
+		'display'  => __( '15分ごと', 'site-pulse' ),
 	);
 	return $schedules;
 }

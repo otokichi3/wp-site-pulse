@@ -63,9 +63,9 @@ if ( 'red' === $page_overall || 'red' === $db_overall ) {
 }
 
 $status_labels = array(
-	'green'  => __( '正常', 'wp-site-pulse' ),
-	'yellow' => __( '注意', 'wp-site-pulse' ),
-	'red'    => __( '異常', 'wp-site-pulse' ),
+	'green'  => __( '正常', 'site-pulse' ),
+	'yellow' => __( '注意', 'site-pulse' ),
+	'red'    => __( '異常', 'site-pulse' ),
 );
 $status_icons = array(
 	'green'  => 'dashicons-yes-alt',
@@ -115,7 +115,7 @@ if ( $rev_ratio > 20 ) {
 }
 ?>
 <div class="wrap wpsp-wrap">
-	<h1><?php esc_html_e( 'Site Pulse ダッシュボード', 'wp-site-pulse' ); ?></h1>
+	<h1><?php esc_html_e( 'Site Pulse ダッシュボード', 'site-pulse' ); ?></h1>
 
 	<!-- ===== Level 1: Site Overall ===== -->
 	<div class="wpsp-hero wpsp-hero--<?php echo esc_attr( $site_overall ); ?>">
@@ -130,16 +130,16 @@ if ( $rev_ratio > 20 ) {
 		<div class="wpsp-pillar wpsp-pillar--<?php echo esc_attr( $page_overall ); ?>">
 			<div class="wpsp-pillar__header">
 				<span class="wpsp-pillar__dot wpsp-pillar__dot--<?php echo esc_attr( $page_overall ); ?>"></span>
-				<span class="wpsp-pillar__title"><?php esc_html_e( 'ページ監視', 'wp-site-pulse' ); ?></span>
+				<span class="wpsp-pillar__title"><?php esc_html_e( 'ページ監視', 'site-pulse' ); ?></span>
 			</div>
 			<div class="wpsp-pillar__metrics">
 				<div class="wpsp-metric">
-					<span class="wpsp-metric__label"><?php esc_html_e( '稼働状況', 'wp-site-pulse' ); ?></span>
+					<span class="wpsp-metric__label"><?php esc_html_e( '稼働状況', 'site-pulse' ); ?></span>
 					<span class="wpsp-metric__value wpsp-metric__value--<?php echo esc_attr( $page_status ); ?>">
 						<?php
 						printf(
 							/* translators: %1$d: number of OK pages, %2$d: total pages */
-							esc_html__( '%1$d / %2$d 正常', 'wp-site-pulse' ),
+							esc_html__( '%1$d / %2$d 正常', 'site-pulse' ),
 							intval( $summary['page_ok'] ),
 							intval( $summary['page_total'] )
 						);
@@ -147,7 +147,7 @@ if ( $rev_ratio > 20 ) {
 					</span>
 				</div>
 				<div class="wpsp-metric">
-					<span class="wpsp-metric__label"><?php esc_html_e( 'エラー率 (24h)', 'wp-site-pulse' ); ?></span>
+					<span class="wpsp-metric__label"><?php esc_html_e( 'エラー率 (24h)', 'site-pulse' ); ?></span>
 					<span class="wpsp-metric__value wpsp-metric__value--<?php echo esc_attr( $error_status ); ?>">
 						<?php echo esc_html( $summary['page_error_rate'] . '%' ); ?>
 					</span>
@@ -159,16 +159,16 @@ if ( $rev_ratio > 20 ) {
 		<div class="wpsp-pillar wpsp-pillar--<?php echo esc_attr( $db_overall ); ?>">
 			<div class="wpsp-pillar__header">
 				<span class="wpsp-pillar__dot wpsp-pillar__dot--<?php echo esc_attr( $db_overall ); ?>"></span>
-				<span class="wpsp-pillar__title"><?php esc_html_e( 'データベース', 'wp-site-pulse' ); ?></span>
+				<span class="wpsp-pillar__title"><?php esc_html_e( 'データベース', 'site-pulse' ); ?></span>
 			</div>
 			<div class="wpsp-pillar__metrics">
 				<div class="wpsp-metric">
-					<span class="wpsp-metric__label"><?php esc_html_e( 'CRUD テスト', 'wp-site-pulse' ); ?></span>
+					<span class="wpsp-metric__label"><?php esc_html_e( 'CRUD テスト', 'site-pulse' ); ?></span>
 					<span class="wpsp-metric__value wpsp-metric__value--<?php echo esc_attr( $db_status ); ?>">
 						<?php
 						printf(
 							/* translators: %1$d: number of OK DB operations, %2$d: total DB operations */
-							esc_html__( '%1$d / %2$d 正常', 'wp-site-pulse' ),
+							esc_html__( '%1$d / %2$d 正常', 'site-pulse' ),
 							intval( $summary['db_ok'] ),
 							intval( $summary['db_total'] )
 						);
@@ -176,12 +176,12 @@ if ( $rev_ratio > 20 ) {
 					</span>
 				</div>
 				<div class="wpsp-metric">
-					<span class="wpsp-metric__label"><?php esc_html_e( 'スロークエリ (24h)', 'wp-site-pulse' ); ?></span>
+					<span class="wpsp-metric__label"><?php esc_html_e( 'スロークエリ (24h)', 'site-pulse' ); ?></span>
 					<span class="wpsp-metric__value wpsp-metric__value--<?php echo esc_attr( $slow_status ); ?>">
 						<?php
 						printf(
 							/* translators: %d: number of slow queries detected */
-							esc_html__( '%d 件検出', 'wp-site-pulse' ),
+							esc_html__( '%d 件検出', 'site-pulse' ),
 							intval( $summary['slow_query_24h'] )
 						);
 						?>
@@ -192,11 +192,11 @@ if ( $rev_ratio > 20 ) {
 	</div>
 
 	<!-- ===== Level 3: Details — Page ===== -->
-	<h2 class="wpsp-group-heading"><?php esc_html_e( 'ページ監視 — 詳細', 'wp-site-pulse' ); ?></h2>
+	<h2 class="wpsp-group-heading"><?php esc_html_e( 'ページ監視 — 詳細', 'site-pulse' ); ?></h2>
 
 	<div class="wpsp-section">
 		<div class="wpsp-section__header">
-			<h3><?php esc_html_e( '応答時間', 'wp-site-pulse' ); ?></h3>
+			<h3><?php esc_html_e( '応答時間', 'site-pulse' ); ?></h3>
 			<div class="wpsp-range-toggle" data-chart="page">
 				<button type="button" class="wpsp-range-btn wpsp-range-btn--active" data-range="24h">24h</button>
 				<button type="button" class="wpsp-range-btn" data-range="7d">7d</button>
@@ -209,17 +209,17 @@ if ( $rev_ratio > 20 ) {
 	</div>
 
 	<div class="wpsp-section">
-		<h3><?php esc_html_e( 'エラーログ', 'wp-site-pulse' ); ?></h3>
+		<h3><?php esc_html_e( 'エラーログ', 'site-pulse' ); ?></h3>
 		<?php if ( empty( $page_errors ) ) : ?>
-			<p class="wpsp-empty"><?php esc_html_e( '直近のエラーはありません。', 'wp-site-pulse' ); ?></p>
+			<p class="wpsp-empty"><?php esc_html_e( '直近のエラーはありません。', 'site-pulse' ); ?></p>
 		<?php else : ?>
 			<table class="widefat striped wpsp-table">
 				<thead>
 					<tr>
-						<th><?php esc_html_e( '日時', 'wp-site-pulse' ); ?></th>
-						<th><?php esc_html_e( 'URL', 'wp-site-pulse' ); ?></th>
-						<th><?php esc_html_e( 'ステータス', 'wp-site-pulse' ); ?></th>
-						<th><?php esc_html_e( '応答時間', 'wp-site-pulse' ); ?></th>
+						<th><?php esc_html_e( '日時', 'site-pulse' ); ?></th>
+						<th><?php esc_html_e( 'URL', 'site-pulse' ); ?></th>
+						<th><?php esc_html_e( 'ステータス', 'site-pulse' ); ?></th>
+						<th><?php esc_html_e( '応答時間', 'site-pulse' ); ?></th>
 					</tr>
 				</thead>
 				<tbody>
@@ -229,7 +229,7 @@ if ( $rev_ratio > 20 ) {
 							<td class="wpsp-mono"><?php echo esc_html( $err['target'] ); ?></td>
 							<td>
 								<?php if ( null === $err['status_code'] ) : ?>
-									<span class="wpsp-badge wpsp-badge--page_down"><?php esc_html_e( '接続エラー', 'wp-site-pulse' ); ?></span>
+									<span class="wpsp-badge wpsp-badge--page_down"><?php esc_html_e( '接続エラー', 'site-pulse' ); ?></span>
 								<?php else : ?>
 									<span class="wpsp-badge wpsp-badge--page_slow">HTTP <?php echo esc_html( $err['status_code'] ); ?></span>
 								<?php endif; ?>
@@ -245,9 +245,9 @@ if ( $rev_ratio > 20 ) {
 	</div>
 
 	<div class="wpsp-section wpsp-section--compact">
-		<h3><?php esc_html_e( '監視 URL', 'wp-site-pulse' ); ?></h3>
+		<h3><?php esc_html_e( '監視 URL', 'site-pulse' ); ?></h3>
 		<p class="wpsp-note">
-			<?php esc_html_e( 'URL の管理は設定ページから行えます。現在の監視対象:', 'wp-site-pulse' ); ?>
+			<?php esc_html_e( 'URL の管理は設定ページから行えます。現在の監視対象:', 'site-pulse' ); ?>
 		</p>
 		<ul class="wpsp-url-list">
 			<?php foreach ( $urls as $url ) : ?>
@@ -260,11 +260,11 @@ if ( $rev_ratio > 20 ) {
 	</div>
 
 	<!-- ===== Level 3: Details — DB ===== -->
-	<h2 class="wpsp-group-heading"><?php esc_html_e( 'データベース — 詳細', 'wp-site-pulse' ); ?></h2>
+	<h2 class="wpsp-group-heading"><?php esc_html_e( 'データベース — 詳細', 'site-pulse' ); ?></h2>
 
 	<div class="wpsp-section">
 		<div class="wpsp-section__header">
-			<h3><?php esc_html_e( 'CRUD パフォーマンス', 'wp-site-pulse' ); ?></h3>
+			<h3><?php esc_html_e( 'CRUD パフォーマンス', 'site-pulse' ); ?></h3>
 			<div class="wpsp-range-toggle" data-chart="db">
 				<button type="button" class="wpsp-range-btn wpsp-range-btn--active" data-range="24h">24h</button>
 				<button type="button" class="wpsp-range-btn" data-range="7d">7d</button>
@@ -277,14 +277,14 @@ if ( $rev_ratio > 20 ) {
 	</div>
 
 	<div class="wpsp-section">
-		<h3><?php esc_html_e( 'DB 飽和度', 'wp-site-pulse' ); ?></h3>
+		<h3><?php esc_html_e( 'DB 飽和度', 'site-pulse' ); ?></h3>
 		<div class="wpsp-saturation">
 			<div class="wpsp-saturation__item">
 				<span class="wpsp-saturation__label">
-					<?php esc_html_e( 'Autoload サイズ', 'wp-site-pulse' ); ?>
+					<?php esc_html_e( 'Autoload サイズ', 'site-pulse' ); ?>
 					<span class="wpsp-info" tabindex="0">
 						<span class="wpsp-info__icon">i</span>
-						<span class="wpsp-info__tooltip"><?php esc_html_e( 'wp_options の autoload=yes のデータ合計サイズ。全ページ読み込み時に毎回メモリに展開されるため、大きいほどサイト全体が遅くなります。800KB以下が理想、1.5MB超は不要なオプションの autoload 解除やプラグインの見直しが必要です。', 'wp-site-pulse' ); ?></span>
+						<span class="wpsp-info__tooltip"><?php esc_html_e( 'wp_options の autoload=yes のデータ合計サイズ。全ページ読み込み時に毎回メモリに展開されるため、大きいほどサイト全体が遅くなります。800KB以下が理想、1.5MB超は不要なオプションの autoload 解除やプラグインの見直しが必要です。', 'site-pulse' ); ?></span>
 					</span>
 				</span>
 				<span class="wpsp-saturation__value"><?php echo esc_html( number_format( $al_size ) . ' KB' ); ?></span>
@@ -295,10 +295,10 @@ if ( $rev_ratio > 20 ) {
 
 			<div class="wpsp-saturation__item">
 				<span class="wpsp-saturation__label">
-					<?php esc_html_e( 'Autoload オプション数', 'wp-site-pulse' ); ?>
+					<?php esc_html_e( 'Autoload オプション数', 'site-pulse' ); ?>
 					<span class="wpsp-info" tabindex="0">
 						<span class="wpsp-info__icon">i</span>
-						<span class="wpsp-info__tooltip"><?php esc_html_e( 'autoload=yes が設定された wp_options の行数。行儀の悪いプラグインが大量に登録しがちです。500以下が理想、1,000超の場合は各プラグインの autoload 設定を確認してください。', 'wp-site-pulse' ); ?></span>
+						<span class="wpsp-info__tooltip"><?php esc_html_e( 'autoload=yes が設定された wp_options の行数。行儀の悪いプラグインが大量に登録しがちです。500以下が理想、1,000超の場合は各プラグインの autoload 設定を確認してください。', 'site-pulse' ); ?></span>
 					</span>
 				</span>
 				<span class="wpsp-saturation__value"><?php echo esc_html( number_format( $al_cnt ) ); ?></span>
@@ -309,10 +309,10 @@ if ( $rev_ratio > 20 ) {
 
 			<div class="wpsp-saturation__item">
 				<span class="wpsp-saturation__label">
-					<?php esc_html_e( '期限切れトランジェント', 'wp-site-pulse' ); ?>
+					<?php esc_html_e( '期限切れトランジェント', 'site-pulse' ); ?>
 					<span class="wpsp-info" tabindex="0">
 						<span class="wpsp-info__icon">i</span>
-						<span class="wpsp-info__tooltip"><?php esc_html_e( '有効期限が切れたまま wp_options に残っている一時データの数。通常は WP-Cron が自動削除しますが、cron が正常に動いていないと溜まり続けます。0が理想で、増え続ける場合はサーバーの cron 設定を確認してください。', 'wp-site-pulse' ); ?></span>
+						<span class="wpsp-info__tooltip"><?php esc_html_e( '有効期限が切れたまま wp_options に残っている一時データの数。通常は WP-Cron が自動削除しますが、cron が正常に動いていないと溜まり続けます。0が理想で、増え続ける場合はサーバーの cron 設定を確認してください。', 'site-pulse' ); ?></span>
 					</span>
 				</span>
 				<span class="wpsp-saturation__value"><?php echo esc_html( number_format( $exp ) ); ?></span>
@@ -323,17 +323,17 @@ if ( $rev_ratio > 20 ) {
 
 			<div class="wpsp-saturation__item">
 				<span class="wpsp-saturation__label">
-					<?php esc_html_e( 'リビジョン倍率', 'wp-site-pulse' ); ?>
+					<?php esc_html_e( 'リビジョン倍率', 'site-pulse' ); ?>
 					<span class="wpsp-info" tabindex="0">
 						<span class="wpsp-info__icon">i</span>
-						<span class="wpsp-info__tooltip"><?php esc_html_e( '投稿リビジョン数を投稿数で割った値。WordPress は編集のたびにリビジョンを保存するため、wp_posts テーブルが肥大化します。10x以下が理想で、大きい場合は wp-config.php に define(\'WP_POST_REVISIONS\', 5); などで制限できます。', 'wp-site-pulse' ); ?></span>
+						<span class="wpsp-info__tooltip"><?php esc_html_e( '投稿リビジョン数を投稿数で割った値。WordPress は編集のたびにリビジョンを保存するため、wp_posts テーブルが肥大化します。10x以下が理想で、大きい場合は wp-config.php に define(\'WP_POST_REVISIONS\', 5); などで制限できます。', 'site-pulse' ); ?></span>
 					</span>
 				</span>
 				<span class="wpsp-saturation__value">
 					<?php
 					printf(
 						/* translators: %1$s: revision ratio, %2$s: revision count, %3$s: post count */
-						esc_html__( '%1$sx（%2$s件 / 投稿%3$s件）', 'wp-site-pulse' ),
+						esc_html__( '%1$sx（%2$s件 / 投稿%3$s件）', 'site-pulse' ),
 						esc_html( $rev_ratio ),
 						esc_html( number_format( $rev_count ) ),
 						esc_html( number_format( $post_count ) )
@@ -348,17 +348,17 @@ if ( $rev_ratio > 20 ) {
 	</div>
 
 	<div class="wpsp-section">
-		<h3><?php esc_html_e( 'スロークエリログ', 'wp-site-pulse' ); ?></h3>
+		<h3><?php esc_html_e( 'スロークエリログ', 'site-pulse' ); ?></h3>
 		<?php if ( empty( $slow_queries ) ) : ?>
-			<p class="wpsp-empty"><?php esc_html_e( 'スロークエリは検出されていません。', 'wp-site-pulse' ); ?></p>
+			<p class="wpsp-empty"><?php esc_html_e( 'スロークエリは検出されていません。', 'site-pulse' ); ?></p>
 		<?php else : ?>
 			<table class="widefat striped wpsp-table">
 				<thead>
 					<tr>
-						<th><?php esc_html_e( '日時', 'wp-site-pulse' ); ?></th>
-						<th><?php esc_html_e( 'SQL', 'wp-site-pulse' ); ?></th>
-						<th><?php esc_html_e( '実行時間', 'wp-site-pulse' ); ?></th>
-						<th><?php esc_html_e( '呼び出し元', 'wp-site-pulse' ); ?></th>
+						<th><?php esc_html_e( '日時', 'site-pulse' ); ?></th>
+						<th><?php esc_html_e( 'SQL', 'site-pulse' ); ?></th>
+						<th><?php esc_html_e( '実行時間', 'site-pulse' ); ?></th>
+						<th><?php esc_html_e( '呼び出し元', 'site-pulse' ); ?></th>
 					</tr>
 				</thead>
 				<tbody>
@@ -382,11 +382,11 @@ if ( $rev_ratio > 20 ) {
 	</div>
 
 	<div class="wpsp-section">
-		<h3><?php esc_html_e( 'クエリ統計', 'wp-site-pulse' ); ?></h3>
-		<p class="wpsp-note"><?php esc_html_e( 'SAVEQUERIES の有効化が必要です。', 'wp-site-pulse' ); ?></p>
+		<h3><?php esc_html_e( 'クエリ統計', 'site-pulse' ); ?></h3>
+		<p class="wpsp-note"><?php esc_html_e( 'SAVEQUERIES の有効化が必要です。', 'site-pulse' ); ?></p>
 		<div class="wpsp-query-stats">
 			<div class="wpsp-query-stats__total">
-				<span class="wpsp-query-stats__label"><?php esc_html_e( '総クエリ数', 'wp-site-pulse' ); ?></span>
+				<span class="wpsp-query-stats__label"><?php esc_html_e( '総クエリ数', 'site-pulse' ); ?></span>
 				<span class="wpsp-query-stats__value"><?php echo esc_html( $query_stats['total'] ); ?></span>
 			</div>
 			<div class="wpsp-query-stats__chart-wrap">
@@ -410,19 +410,19 @@ if ( $rev_ratio > 20 ) {
 	</div>
 
 	<!-- ===== Alert History (shared) ===== -->
-	<h2 class="wpsp-group-heading"><?php esc_html_e( 'アラート履歴', 'wp-site-pulse' ); ?></h2>
+	<h2 class="wpsp-group-heading"><?php esc_html_e( 'アラート履歴', 'site-pulse' ); ?></h2>
 
 	<div class="wpsp-section">
 		<?php if ( empty( $alerts ) ) : ?>
-			<p class="wpsp-empty"><?php esc_html_e( 'アラートはまだ送信されていません。', 'wp-site-pulse' ); ?></p>
+			<p class="wpsp-empty"><?php esc_html_e( 'アラートはまだ送信されていません。', 'site-pulse' ); ?></p>
 		<?php else : ?>
 			<table class="widefat striped wpsp-table">
 				<thead>
 					<tr>
-						<th><?php esc_html_e( '日時', 'wp-site-pulse' ); ?></th>
-						<th><?php esc_html_e( '種別', 'wp-site-pulse' ); ?></th>
-						<th><?php esc_html_e( '対象', 'wp-site-pulse' ); ?></th>
-						<th><?php esc_html_e( 'メッセージ', 'wp-site-pulse' ); ?></th>
+						<th><?php esc_html_e( '日時', 'site-pulse' ); ?></th>
+						<th><?php esc_html_e( '種別', 'site-pulse' ); ?></th>
+						<th><?php esc_html_e( '対象', 'site-pulse' ); ?></th>
+						<th><?php esc_html_e( 'メッセージ', 'site-pulse' ); ?></th>
 					</tr>
 				</thead>
 				<tbody>

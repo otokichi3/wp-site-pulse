@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Site Pulse 0.1.0\n"
-"Report-Msgid-Bugs-To: https://github.com/otokichi3/wp-site-pulse/issues\n"
+"Report-Msgid-Bugs-To: https://github.com/otokichi3/site-pulse/issues\n"
 "POT-Creation-Date: 2026-03-18 00:00:00+00:00\n"
 "PO-Revision-Date: 2026-03-18 00:00:00+00:00\n"
 "Last-Translator: otokichi3\n"

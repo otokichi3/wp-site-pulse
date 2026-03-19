@@ -24,10 +24,10 @@ class WPSP_Dashboard {
 	 */
 	public static function add_menu() {
 		add_menu_page(
-			__( 'Site Pulse', 'wp-site-pulse' ),
-			__( 'Site Pulse', 'wp-site-pulse' ),
+			__( 'Site Pulse', 'site-pulse' ),
+			__( 'Site Pulse', 'site-pulse' ),
 			'manage_options',
-			'wp-site-pulse',
+			'site-pulse',
 			array( __CLASS__, 'render' ),
 			'dashicons-heart',
 			80
@@ -40,7 +40,7 @@ class WPSP_Dashboard {
 	 * @param string $hook_suffix Current admin page.
 	 */
 	public static function enqueue_assets( $hook_suffix ) {
-		if ( 'toplevel_page_wp-site-pulse' !== $hook_suffix ) {
+		if ( 'toplevel_page_site-pulse' !== $hook_suffix ) {
 			return;
 		}
 
@@ -130,9 +130,9 @@ class WPSP_Dashboard {
 				'db'   => WPSP_DB_SLOW_THRESHOLD_MS,
 			),
 			'i18n'            => array(
-				'responseTime' => __( '応答時間 (ms)', 'wp-site-pulse' ),
-				'execTime'     => __( '実行時間 (ms)', 'wp-site-pulse' ),
-				'threshold'    => __( '閾値', 'wp-site-pulse' ),
+				'responseTime' => __( '応答時間 (ms)', 'site-pulse' ),
+				'execTime'     => __( '実行時間 (ms)', 'site-pulse' ),
+				'threshold'    => __( '閾値', 'site-pulse' ),
 				'select'       => 'SELECT',
 				'insert'       => 'INSERT',
 				'update'       => 'UPDATE',

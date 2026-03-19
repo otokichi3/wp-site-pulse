@@ -55,14 +55,14 @@ class WPSP_Alerter {
 				if ( null === $status_code ) {
 					$message = sprintf(
 						/* translators: %1$s: URL, %2$d: consecutive failure count */
-						__( '%1$s 接続エラー（連続失敗: %2$d 回）', 'wp-site-pulse' ),
+						__( '%1$s 接続エラー（連続失敗: %2$d 回）', 'site-pulse' ),
 						$url,
 						$consecutive
 					);
 				} else {
 					$message = sprintf(
 						/* translators: %1$s: URL, %2$d: HTTP status code, %3$d: consecutive failure count */
-						__( '%1$s が HTTP %2$d を返しました（連続失敗: %3$d 回）', 'wp-site-pulse' ),
+						__( '%1$s が HTTP %2$d を返しました（連続失敗: %3$d 回）', 'site-pulse' ),
 						$url,
 						(int) $status_code,
 						$consecutive
@@ -75,7 +75,7 @@ class WPSP_Alerter {
 			if ( null !== $time_ms && (int) $time_ms > WPSP_PAGE_SLOW_THRESHOLD_MS ) {
 				$message = sprintf(
 					/* translators: %1$s: URL, %2$d: response time in ms, %3$d: threshold in ms */
-					__( '%1$s の応答時間 %2$dms（閾値: %3$dms）', 'wp-site-pulse' ),
+					__( '%1$s の応答時間 %2$dms（閾値: %3$dms）', 'site-pulse' ),
 					$url,
 					(int) $time_ms,
 					WPSP_PAGE_SLOW_THRESHOLD_MS
@@ -125,7 +125,7 @@ class WPSP_Alerter {
 			if ( 0 === $status ) {
 				$message = sprintf(
 					/* translators: %1$s: target table, %2$s: DB operation (SELECT, INSERT, etc.) */
-					__( '%1$s への DB %2$s クエリが失敗しました', 'wp-site-pulse' ),
+					__( '%1$s への DB %2$s クエリが失敗しました', 'site-pulse' ),
 					$target,
 					$label
 				);
@@ -136,7 +136,7 @@ class WPSP_Alerter {
 			if ( null !== $time_ms && (int) $time_ms > WPSP_DB_SLOW_THRESHOLD_MS ) {
 				$message = sprintf(
 					/* translators: %1$s: DB operation label, %2$d: execution time in ms, %3$d: threshold in ms */
-					__( 'DB 操作 %1$s に %2$dms かかりました（閾値: %3$dms）', 'wp-site-pulse' ),
+					__( 'DB 操作 %1$s に %2$dms かかりました（閾値: %3$dms）', 'site-pulse' ),
 					$label,
 					(int) $time_ms,
 					WPSP_DB_SLOW_THRESHOLD_MS
@@ -153,10 +153,10 @@ class WPSP_Alerter {
 	 */
 	private static function get_type_labels() {
 		return array(
-			'page_down' => __( 'ページダウン', 'wp-site-pulse' ),
-			'page_slow' => __( 'ページ応答遅延', 'wp-site-pulse' ),
-			'db_slow'   => __( 'DB 応答遅延', 'wp-site-pulse' ),
-			'db_error'  => __( 'DB エラー', 'wp-site-pulse' ),
+			'page_down' => __( 'ページダウン', 'site-pulse' ),
+			'page_slow' => __( 'ページ応答遅延', 'site-pulse' ),
+			'db_slow'   => __( 'DB 応答遅延', 'site-pulse' ),
+			'db_error'  => __( 'DB エラー', 'site-pulse' ),
 		);
 	}
 
@@ -238,23 +238,23 @@ class WPSP_Alerter {
 		<td style="padding:24px;">
 			<table width="100%" cellpadding="0" cellspacing="0" style="font-size:14px;color:#1d2327;line-height:1.7;">
 				<tr>
-					<td style="padding:6px 0;color:#646970;width:100px;"><?php esc_html_e( 'サイト', 'wp-site-pulse' ); ?></td>
+					<td style="padding:6px 0;color:#646970;width:100px;"><?php esc_html_e( 'サイト', 'site-pulse' ); ?></td>
 					<td style="padding:6px 0;font-weight:600;">
 						<a href="<?php echo esc_url( $site_url ); ?>" style="color:#2271b1;text-decoration:none;"><?php echo esc_html( $site_name ); ?></a>
 					</td>
 				</tr>
 				<tr>
-					<td style="padding:6px 0;color:#646970;"><?php esc_html_e( '検知日時', 'wp-site-pulse' ); ?></td>
+					<td style="padding:6px 0;color:#646970;"><?php esc_html_e( '検知日時', 'site-pulse' ); ?></td>
 					<td style="padding:6px 0;"><?php echo esc_html( $now ); ?></td>
 				</tr>
 				<tr>
-					<td style="padding:6px 0;color:#646970;"><?php esc_html_e( '種別', 'wp-site-pulse' ); ?></td>
+					<td style="padding:6px 0;color:#646970;"><?php esc_html_e( '種別', 'site-pulse' ); ?></td>
 					<td style="padding:6px 0;">
 						<span style="display:inline-block;padding:2px 10px;border-radius:10px;font-size:12px;font-weight:600;background:<?php echo esc_attr( $severity_color ); ?>;color:#fff;"><?php echo esc_html( $alert_type ); ?></span>
 					</td>
 				</tr>
 				<tr>
-					<td style="padding:6px 0;color:#646970;"><?php esc_html_e( '対象', 'wp-site-pulse' ); ?></td>
+					<td style="padding:6px 0;color:#646970;"><?php esc_html_e( '対象', 'site-pulse' ); ?></td>
 					<td style="padding:6px 0;font-family:Consolas,Monaco,monospace;font-size:13px;"><?php echo esc_html( $target ); ?></td>
 				</tr>
 			</table>
@@ -269,7 +269,7 @@ class WPSP_Alerter {
 				<?php
 				printf(
 					/* translators: %d: cooldown period in minutes */
-					esc_html__( '同一アラートは %d 分間抑制されます。', 'wp-site-pulse' ),
+					esc_html__( '同一アラートは %d 分間抑制されます。', 'site-pulse' ),
 					(int) ( WPSP_ALERT_COOLDOWN_SEC / 60 )
 				);
 				?>
@@ -283,7 +283,7 @@ class WPSP_Alerter {
 			<?php
 			printf(
 				/* translators: %1$s: site name */
-				esc_html__( 'このメールは %1$s の Site Pulse プラグインから自動送信されました。', 'wp-site-pulse' ),
+				esc_html__( 'このメールは %1$s の Site Pulse プラグインから自動送信されました。', 'site-pulse' ),
 				esc_html( $site_name )
 			);
 			?>
