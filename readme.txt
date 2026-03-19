@@ -1,4 +1,4 @@
-=== WP Site Pulse ===
+=== Site Pulse ===
 Contributors: otokichi3
 Tags: monitoring, uptime, performance, dashboard, slow-query
 Requires at least: 6.0

@@ -1,6 +1,6 @@
 <?php
 /**
- * Plugin Name: WP Site Pulse
+ * Plugin Name: Site Pulse
  * Plugin URI:  https://github.com/otokichi3/wp-site-pulse
  * Description: Lightweight site monitoring — page uptime, response time, DB performance, and slow query detection with a built-in dashboard.
  * Version:     0.1.0
