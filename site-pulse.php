@@ -59,42 +59,56 @@ register_deactivation_hook( __FILE__, 'wpsp_deactivate' );
 function wpsp_deactivate() {
 	wp_clear_scheduled_hook( 'wpsp_cron_check' );
 	wp_clear_scheduled_hook( 'wpsp_cron_cleanup' );
+	delete_transient( 'wpsp_last_check' );
+	delete_transient( 'wpsp_last_cleanup' );
 }
 
-// Register custom cron interval (15 min).
-add_filter( 'cron_schedules', 'wpsp_add_cron_interval' );
+// Check interval (seconds).
+define( 'WPSP_CHECK_INTERVAL', 15 * MINUTE_IN_SECONDS );
+define( 'WPSP_CLEANUP_INTERVAL', DAY_IN_SECONDS );
 
 /**
- * Add a 15-minute cron schedule.
+ * WP-Cron のループバック発火を無効化
  *
- * @param array $schedules Existing schedules.
- * @return array
+ * WP-Cron はページアクセス時に WordPress が自分自身へ HTTP リクエスト（ループバック）
+ * を飛ばしてジョブを実行する仕組み。このリクエストが他の cron ジョブと重なると
+ * ページの応答が 3〜6 秒に跳ね上がる現象が確認された。
+ *
+ * 代わりに shutdown フック（レスポンス送信後）でチェックを実行する。
  */
-function wpsp_add_cron_interval( $schedules ) {
-	$schedules['wpsp_15min'] = array(
-		'interval' => 15 * MINUTE_IN_SECONDS,
-		'display'  => __( '15分ごと', 'site-pulse' ),
-	);
-	return $schedules;
-}
-
-// Schedule cron if not already scheduled.
-add_action( 'init', 'wpsp_schedule_cron' );
+add_action( 'init', function () {
+	remove_action( 'wp_loaded', 'wp_cron' );
+} );
 
 /**
- * Ensure the cron event is scheduled.
+ * レスポンス送信後にチェックを実行（shutdown フック）
+ *
+ * 前回のチェックから WPSP_CHECK_INTERVAL 秒以上経過していれば実行する。
+ * transient をロック代わりに使い、重複実行を防止する。
  */
-function wpsp_schedule_cron() {
-	if ( ! wp_next_scheduled( 'wpsp_cron_check' ) ) {
-		wp_schedule_event( time(), 'wpsp_15min', 'wpsp_cron_check' );
+add_action( 'shutdown', 'wpsp_maybe_run_checks' );
+
+/**
+ * 前回チェックから十分な時間が経過していればチェックを実行する。
+ */
+function wpsp_maybe_run_checks() {
+	$last_check = get_transient( 'wpsp_last_check' );
+	if ( $last_check !== false ) {
+		return;
 	}
-	if ( ! wp_next_scheduled( 'wpsp_cron_cleanup' ) ) {
-		wp_schedule_event( time(), 'daily', 'wpsp_cron_cleanup' );
+
+	// transient をセットしてロック（次の WPSP_CHECK_INTERVAL 秒間は再実行しない）。
+	set_transient( 'wpsp_last_check', time(), WPSP_CHECK_INTERVAL );
+
+	wpsp_run_checks();
+
+	// クリーンアップも必要なら実行。
+	$last_cleanup = get_transient( 'wpsp_last_cleanup' );
+	if ( $last_cleanup === false ) {
+		set_transient( 'wpsp_last_cleanup', time(), WPSP_CLEANUP_INTERVAL );
+		WPSP_Cleanup::run();
 	}
 }
-
-// Cron callback — run all checks.
-add_action( 'wpsp_cron_check', 'wpsp_run_checks' );
 
 /**
  * Execute page and DB checks.
@@ -106,8 +120,19 @@ function wpsp_run_checks() {
 	WPSP_Alerter::evaluate();
 }
 
-// Cleanup cron callback — daily.
-add_action( 'wpsp_cron_cleanup', array( 'WPSP_Cleanup', 'run' ) );
+/**
+ * 旧 WP-Cron イベントをクリーンアップ（アップデート時の互換処理）。
+ */
+add_action( 'init', 'wpsp_cleanup_legacy_cron' );
+
+function wpsp_cleanup_legacy_cron() {
+	if ( wp_next_scheduled( 'wpsp_cron_check' ) ) {
+		wp_clear_scheduled_hook( 'wpsp_cron_check' );
+	}
+	if ( wp_next_scheduled( 'wpsp_cron_cleanup' ) ) {
+		wp_clear_scheduled_hook( 'wpsp_cron_cleanup' );
+	}
+}
 
 // Boot admin dashboard.
 if ( is_admin() ) {

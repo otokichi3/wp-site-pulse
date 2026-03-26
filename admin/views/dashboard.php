@@ -349,7 +349,13 @@ if ( $rev_ratio > 20 ) {
 
 	<div class="wpsp-section">
 		<h3><?php esc_html_e( 'スロークエリログ', 'site-pulse' ); ?></h3>
-		<?php if ( empty( $slow_queries ) ) : ?>
+		<?php if ( ! defined( 'SAVEQUERIES' ) || ! SAVEQUERIES ) : ?>
+			<p class="wpsp-note" style="color:#d63638;">
+				SAVEQUERIES: OFF —
+				<?php esc_html_e( 'スロークエリ検知を利用するには、wp-config.php に以下を追加してください:', 'site-pulse' ); ?>
+				<code style="display:inline-block;margin-top:4px;">define( 'SAVEQUERIES', true );</code>
+			</p>
+		<?php elseif ( empty( $slow_queries ) ) : ?>
 			<p class="wpsp-empty"><?php esc_html_e( 'スロークエリは検出されていません。', 'site-pulse' ); ?></p>
 		<?php else : ?>
 			<table class="widefat striped wpsp-table">
@@ -383,7 +389,15 @@ if ( $rev_ratio > 20 ) {
 
 	<div class="wpsp-section">
 		<h3><?php esc_html_e( 'クエリ統計', 'site-pulse' ); ?></h3>
-		<p class="wpsp-note"><?php esc_html_e( 'SAVEQUERIES の有効化が必要です。', 'site-pulse' ); ?></p>
+		<?php if ( defined( 'SAVEQUERIES' ) && SAVEQUERIES ) : ?>
+			<p class="wpsp-note" style="color:#00a32a;">SAVEQUERIES: ON</p>
+		<?php else : ?>
+			<p class="wpsp-note" style="color:#d63638;">
+				SAVEQUERIES: OFF —
+				<?php esc_html_e( 'スロークエリ検知とクエリ統計を利用するには、wp-config.php に以下を追加してください:', 'site-pulse' ); ?>
+				<code style="display:inline-block;margin-top:4px;">define( 'SAVEQUERIES', true );</code>
+			</p>
+		<?php endif; ?>
 		<div class="wpsp-query-stats">
 			<div class="wpsp-query-stats__total">
 				<span class="wpsp-query-stats__label"><?php esc_html_e( '総クエリ数', 'site-pulse' ); ?></span>
