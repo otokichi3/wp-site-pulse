@@ -50,6 +50,14 @@ class WPSP_Settings {
 			array(),
 			WPSP_VERSION
 		);
+
+		wp_enqueue_script(
+			'wpsp-settings',
+			WPSP_PLUGIN_URL . 'admin/js/settings.js',
+			array(),
+			WPSP_VERSION,
+			true
+		);
 	}
 
 	/**
@@ -116,8 +124,7 @@ class WPSP_Settings {
 		$all_types    = array( 'page_down', 'page_slow', 'db_slow', 'db_error' );
 		$active_types = array();
 		if ( isset( $_POST['wpsp_alert_types'] ) && is_array( $_POST['wpsp_alert_types'] ) ) {
-			foreach ( wp_unslash( $_POST['wpsp_alert_types'] ) as $type ) { // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- Sanitized on next line.
-				$type = sanitize_text_field( $type );
+			foreach ( array_map( 'sanitize_text_field', wp_unslash( $_POST['wpsp_alert_types'] ) ) as $type ) {
 				if ( in_array( $type, $all_types, true ) ) {
 					$active_types[] = $type;
 				}

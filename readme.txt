@@ -31,13 +31,12 @@ The plugin sends email alerts when a page returns an error, responds too slowly,
 
 The admin dashboard shows an overall site health indicator, then breaks down into page monitoring and DB status. Each section has charts (powered by Chart.js), error logs, and detail views.
 
-= External Services =
+= Third-Party Libraries =
 
-This plugin loads Chart.js from jsDelivr CDN on the admin dashboard page only. No site data is sent externally.
+This plugin bundles Chart.js (MIT license) for rendering charts on the admin dashboard. All files are included locally — no external requests are made.
 
-* `https://cdn.jsdelivr.net/npm/chart.js@4/dist/chart.umd.min.js`
-* `https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns@3/dist/chartjs-adapter-date-fns.bundle.min.js`
-* [jsDelivr Terms of Use](https://www.jsdelivr.com/terms) / [Privacy Policy](https://www.jsdelivr.com/privacy-policy-jsdelivr-net)
+* [Chart.js](https://www.chartjs.org/) — MIT License
+* [chartjs-adapter-date-fns](https://github.com/chartjs/chartjs-adapter-date-fns) — MIT License
 
 == Installation ==
 

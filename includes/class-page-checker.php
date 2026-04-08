@@ -173,7 +173,23 @@ class WPSP_Page_Checker {
 			return array();
 		}
 
-		$expiration = time() + 60; // 60 seconds — just enough for this request.
+		/*
+		 * Why wp_generate_auth_cookie() is used here:
+		 *
+		 * This plugin monitors pages that require login (e.g. member-only
+		 * pages). To check those pages via wp_remote_get(), we need to send
+		 * valid auth cookies with the HTTP request. We use WP core's own
+		 * wp_generate_auth_cookie() — not a custom login mechanism — so
+		 * security plugins' login-attempt protections are not bypassed.
+		 *
+		 * Safeguards:
+		 * - Only admin-selected URLs receive cookies (per-URL opt-in).
+		 * - Only administrator/editor users can be selected.
+		 * - Cookies expire in 60 seconds — just enough for one request.
+		 * - No user is created; an existing user is referenced read-only.
+		 * - The admin must explicitly enable this via Settings.
+		 */
+		$expiration = time() + 60;
 		$scheme     = wp_parse_url( $url, PHP_URL_SCHEME );
 		$secure     = ( 'https' === $scheme );
 

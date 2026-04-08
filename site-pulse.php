@@ -30,13 +30,6 @@ define( 'WPSP_SLOW_QUERY_THRESHOLD_MS', 500 );
 define( 'WPSP_ALERT_COOLDOWN_SEC', 3600 );
 define( 'WPSP_DATA_RETENTION_DAYS', 7 );
 
-// Load textdomain — only needed for WP < 6.7; newer versions handle this automatically.
-if ( version_compare( get_bloginfo( 'version' ), '6.7', '<' ) ) {
-	add_action( 'init', function () {
-		load_plugin_textdomain( 'site-pulse', false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
-	} );
-}
-
 // Load classes.
 require_once WPSP_PLUGIN_DIR . 'includes/class-installer.php';
 require_once WPSP_PLUGIN_DIR . 'includes/class-page-checker.php';

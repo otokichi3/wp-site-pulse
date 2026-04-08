@@ -68,7 +68,7 @@ class WPSP_Dashboard {
 
 		wp_enqueue_script(
 			'wpsp-chartjs',
-			'https://cdn.jsdelivr.net/npm/chart.js@4/dist/chart.umd.min.js', // phpcs:ignore PluginCheck.CodeAnalysis.EnqueuedResourceOffloading.OffloadedContent -- Disclosed in readme.txt External Services section.
+			WPSP_PLUGIN_URL . 'admin/js/chart.umd.min.js',
 			array(),
 			'4.4.0',
 			true
@@ -76,7 +76,7 @@ class WPSP_Dashboard {
 
 		wp_enqueue_script(
 			'wpsp-chartjs-adapter',
-			'https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns@3/dist/chartjs-adapter-date-fns.bundle.min.js', // phpcs:ignore PluginCheck.CodeAnalysis.EnqueuedResourceOffloading.OffloadedContent -- Disclosed in readme.txt External Services section.
+			WPSP_PLUGIN_URL . 'admin/js/chartjs-adapter-date-fns.bundle.min.js',
 			array( 'wpsp-chartjs' ),
 			'3.0.0',
 			true
