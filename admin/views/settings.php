@@ -28,46 +28,48 @@ $all_alert_types = array(
 		<div class="wpsp-section">
 			<h3><?php esc_html_e( '監視対象 URL', 'site-pulse' ); ?></h3>
 			<p class="wpsp-note">
-				<?php esc_html_e( '1行に1つの URL を入力してください（最大10件）。', 'site-pulse' ); ?>
+				<?php esc_html_e( '最大10件。「認証」にチェックを入れた URL は、指定ユーザーとしてログインした状態でチェックします。会員制ページなどログインが必要なページに使用してください。', 'site-pulse' ); ?>
 			</p>
-			<textarea
-				name="wpsp_urls"
-				rows="6"
-				class="large-text code"
-				placeholder="https://example.com/&#10;https://example.com/wp-json/"
-			><?php echo esc_textarea( implode( "\n", $settings['urls'] ) ); ?></textarea>
-		</div>
+			<table class="widefat" style="max-width:800px;">
+				<thead>
+					<tr>
+						<th><?php esc_html_e( 'URL', 'site-pulse' ); ?></th>
+						<th style="width:80px;text-align:center;"><?php esc_html_e( '認証', 'site-pulse' ); ?></th>
+						<th style="width:40px;"></th>
+					</tr>
+				</thead>
+				<tbody id="wpsp-url-rows">
+					<?php foreach ( $settings['urls'] as $i => $url ) : ?>
+					<tr>
+						<td><input type="text" name="wpsp_urls[]" value="<?php echo esc_attr( $url ); ?>" class="large-text code" placeholder="https://example.com/" /></td>
+						<td style="text-align:center;">
+							<input type="checkbox" name="wpsp_url_auth[]" value="<?php echo esc_attr( $i ); ?>"
+								<?php checked( in_array( $url, $settings['auth_urls'], true ) ); ?> />
+						</td>
+						<td><button type="button" class="button-link wpsp-remove-row" title="<?php esc_attr_e( '削除', 'site-pulse' ); ?>">&times;</button></td>
+					</tr>
+					<?php endforeach; ?>
+				</tbody>
+			</table>
+			<button type="button" class="button" id="wpsp-add-url" style="margin-top:8px;">+ <?php esc_html_e( 'URL を追加', 'site-pulse' ); ?></button>
 
-		<!-- Authenticated Monitoring -->
-		<div class="wpsp-section">
-			<h3><?php esc_html_e( '認証付き監視', 'site-pulse' ); ?></h3>
-			<p class="wpsp-note">
-				<?php esc_html_e( '有効にすると、指定した WordPress ユーザーとしてログインした状態でページをチェックします。会員制ページやマイページなど、ログインが必要なページを監視する場合に使用してください。', 'site-pulse' ); ?>
-			</p>
-			<label style="display:block;margin-bottom:12px;">
-				<input
-					type="checkbox"
-					name="wpsp_auth_enabled"
-					value="1"
-					<?php checked( $settings['auth_enabled'] ); ?>
-				/>
-				<?php esc_html_e( '認証付き監視を有効にする', 'site-pulse' ); ?>
-			</label>
-			<label style="display:block;">
-				<?php esc_html_e( 'チェック実行ユーザー:', 'site-pulse' ); ?>
-				<?php
-				wp_dropdown_users( array(
-					'name'             => 'wpsp_auth_user_id',
-					'selected'         => $settings['auth_user_id'],
-					'role__in'         => array( 'administrator', 'editor' ),
-					'show_option_none' => __( '— 選択してください —', 'site-pulse' ),
-					'option_none_value' => '0',
-				) );
-				?>
-			</label>
-			<p class="description" style="margin-top:8px;">
-				<?php esc_html_e( 'セキュリティのため、管理者または編集者のみ選択できます。チェック時に一時的な認証 Cookie（有効期限 60 秒）を生成してリクエストに付与します。', 'site-pulse' ); ?>
-			</p>
+			<div style="margin-top:16px;">
+				<label>
+					<?php esc_html_e( 'チェック実行ユーザー:', 'site-pulse' ); ?>
+					<?php
+					wp_dropdown_users( array(
+						'name'             => 'wpsp_auth_user_id',
+						'selected'         => $settings['auth_user_id'],
+						'role__in'         => array( 'administrator', 'editor' ),
+						'show_option_none' => __( '— 選択してください —', 'site-pulse' ),
+						'option_none_value' => '0',
+					) );
+					?>
+				</label>
+				<p class="description" style="margin-top:8px;">
+					<?php esc_html_e( '「認証」にチェックした URL のチェック時に、このユーザーの認証 Cookie（有効期限 60 秒）を付与します。セキュリティのため管理者・編集者のみ選択可。', 'site-pulse' ); ?>
+				</p>
+			</div>
 		</div>
 
 		<!-- Alert Email -->
@@ -131,3 +133,36 @@ $all_alert_types = array(
 		<?php submit_button( __( '設定を保存', 'site-pulse' ) ); ?>
 	</form>
 </div>
+<script>
+(function() {
+	var tbody = document.getElementById('wpsp-url-rows');
+	var addBtn = document.getElementById('wpsp-add-url');
+	var maxRows = 10;
+
+	function getNextIndex() {
+		var inputs = tbody.querySelectorAll('input[name="wpsp_url_auth[]"]');
+		var max = -1;
+		inputs.forEach(function(el) { max = Math.max(max, parseInt(el.value, 10) || 0); });
+		return max + 1;
+	}
+
+	addBtn.addEventListener('click', function() {
+		if (tbody.rows.length >= maxRows) return;
+		var idx = getNextIndex();
+		var tr = document.createElement('tr');
+		tr.innerHTML =
+			'<td><input type="text" name="wpsp_urls[]" value="" class="large-text code" placeholder="https://example.com/" /></td>' +
+			'<td style="text-align:center;"><input type="checkbox" name="wpsp_url_auth[]" value="' + idx + '" /></td>' +
+			'<td><button type="button" class="button-link wpsp-remove-row" title="削除">&times;</button></td>';
+		tbody.appendChild(tr);
+		if (tbody.rows.length >= maxRows) addBtn.disabled = true;
+	});
+
+	tbody.addEventListener('click', function(e) {
+		if (e.target.classList.contains('wpsp-remove-row')) {
+			e.target.closest('tr').remove();
+			addBtn.disabled = false;
+		}
+	});
+})();
+</script>

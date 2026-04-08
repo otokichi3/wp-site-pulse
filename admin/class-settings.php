@@ -68,17 +68,30 @@ class WPSP_Settings {
 			return;
 		}
 
-		// Monitored URLs.
-		$raw_urls = isset( $_POST['wpsp_urls'] ) ? sanitize_textarea_field( wp_unslash( $_POST['wpsp_urls'] ) ) : '';
-		$urls     = array_values( array_filter( array_map( 'trim', explode( "\n", $raw_urls ) ) ) );
-		$urls     = array_map( 'esc_url_raw', $urls );
-		$urls     = array_slice( array_filter( $urls ), 0, 10 );
-		update_option( 'wpsp_monitored_urls', $urls );
+		// Monitored URLs + per-URL auth flags.
+		$raw_urls  = isset( $_POST['wpsp_urls'] ) && is_array( $_POST['wpsp_urls'] ) ? wp_unslash( $_POST['wpsp_urls'] ) : array(); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- Sanitized below.
+		$raw_auths = isset( $_POST['wpsp_url_auth'] ) && is_array( $_POST['wpsp_url_auth'] ) ? array_map( 'absint', wp_unslash( $_POST['wpsp_url_auth'] ) ) : array();
 
-		// Authenticated monitoring.
-		$auth_enabled = isset( $_POST['wpsp_auth_enabled'] ) ? true : false;
-		update_option( 'wpsp_auth_enabled', $auth_enabled );
+		$urls      = array();
+		$auth_urls = array();
 
+		foreach ( $raw_urls as $i => $raw_url ) {
+			$url = esc_url_raw( trim( sanitize_text_field( $raw_url ) ) );
+			if ( empty( $url ) ) {
+				continue;
+			}
+			$urls[] = $url;
+			if ( in_array( $i, $raw_auths, true ) ) {
+				$auth_urls[] = $url;
+			}
+		}
+
+		$urls      = array_slice( $urls, 0, 10 );
+		$auth_urls = array_intersect( $auth_urls, $urls );
+		update_option( 'wpsp_monitored_urls', array_values( $urls ) );
+		update_option( 'wpsp_auth_urls', array_values( $auth_urls ) );
+
+		// Auth user for per-URL authenticated checks.
 		$auth_user_id = isset( $_POST['wpsp_auth_user_id'] ) ? absint( wp_unslash( $_POST['wpsp_auth_user_id'] ) ) : 0;
 		if ( $auth_user_id > 0 ) {
 			$user = get_userdata( $auth_user_id );
@@ -128,8 +141,8 @@ class WPSP_Settings {
 
 		return array(
 			'urls'                   => $urls,
-			'auth_enabled'           => (bool) get_option( 'wpsp_auth_enabled', false ),
 			'auth_user_id'           => (int) get_option( 'wpsp_auth_user_id', 0 ),
+			'auth_urls'              => (array) get_option( 'wpsp_auth_urls', array() ),
 			'alert_email'            => get_option( 'wpsp_alert_email', get_option( 'admin_email' ) ),
 			'slow_query_threshold'   => (int) get_option( 'wpsp_slow_query_threshold_ms', WPSP_SLOW_QUERY_THRESHOLD_MS ),
 			'alert_types'            => get_option( 'wpsp_alert_types_email', array( 'page_down', 'page_slow', 'db_slow', 'db_error' ) ),

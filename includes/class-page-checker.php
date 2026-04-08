@@ -157,7 +157,9 @@ class WPSP_Page_Checker {
 	 * @return array Array of WP_Http_Cookie objects.
 	 */
 	private static function get_auth_cookies( $url ) {
-		if ( ! get_option( 'wpsp_auth_enabled', false ) ) {
+		// Per-URL auth: only send cookies for URLs explicitly marked.
+		$auth_urls = (array) get_option( 'wpsp_auth_urls', array() );
+		if ( empty( $auth_urls ) || ! in_array( $url, $auth_urls, true ) ) {
 			return array();
 		}
 

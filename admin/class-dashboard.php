@@ -12,6 +12,21 @@ if ( ! defined( 'ABSPATH' ) ) {
 class WPSP_Dashboard {
 
 	/**
+	 * Convert a UTC datetime string to WordPress local time.
+	 *
+	 * @param string $utc_datetime UTC datetime string (Y-m-d H:i:s).
+	 * @param string $format       Output format (default: Y-m-d H:i:s).
+	 * @return string Local datetime string.
+	 */
+	public static function to_local_time( $utc_datetime, $format = 'Y-m-d H:i:s' ) {
+		$timestamp = strtotime( $utc_datetime . ' UTC' );
+		if ( false === $timestamp ) {
+			return $utc_datetime;
+		}
+		return wp_date( $format, $timestamp );
+	}
+
+	/**
 	 * Register hooks.
 	 */
 	public static function init() {
@@ -315,7 +330,7 @@ class WPSP_Dashboard {
 				$grouped[ $url ] = array();
 			}
 			$grouped[ $url ][] = array(
-				'x' => $r['created_at'],
+				'x' => self::to_local_time( $r['created_at'] ),
 				'y' => $r['response_time_ms'],
 			);
 		}
@@ -336,7 +351,7 @@ class WPSP_Dashboard {
 				$grouped[ $op ] = array();
 			}
 			$grouped[ $op ][] = array(
-				'x' => $r['created_at'],
+				'x' => self::to_local_time( $r['created_at'] ),
 				'y' => $r['response_time_ms'],
 			);
 		}

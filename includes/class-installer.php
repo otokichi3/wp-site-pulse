@@ -96,5 +96,6 @@ class WPSP_Installer {
 		delete_option( 'wpsp_alert_types_email' );
 		delete_option( 'wpsp_auth_enabled' );
 		delete_option( 'wpsp_auth_user_id' );
+		delete_option( 'wpsp_auth_urls' );
 	}
 }

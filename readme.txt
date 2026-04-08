@@ -12,7 +12,7 @@ Internal site monitoring for WordPress. Checks page uptime, DB performance, and 
 
 == Description ==
 
-Site Pulse is a monitoring plugin that runs entirely inside WordPress. It checks your pages and database on a schedule using WP-Cron and shows the results on a dashboard in wp-admin. When something goes wrong, it sends you an email.
+Site Pulse is a monitoring plugin that runs entirely inside WordPress. It checks your pages and database automatically after each page load (via the shutdown hook) and shows the results on a dashboard in wp-admin. When something goes wrong, it sends you an email.
 
 No external monitoring service or API key required.
 
@@ -46,9 +46,7 @@ This plugin loads Chart.js from jsDelivr CDN on the admin dashboard page only. N
 3. Open "Site Pulse" in the admin menu.
 4. Go to "Site Pulse > Settings" to add URLs and configure alerts.
 
-WP-Cron depends on site traffic to run. For reliable monitoring, add a server cron:
-
-`*/15 * * * * wget -q -O /dev/null https://yourdomain.com/wp-cron.php?doing_wp_cron`
+Checks run automatically after page loads using a shutdown hook, so no server-side cron setup is required. The plugin throttles itself to run at most once every 15 minutes.
 
 == Frequently Asked Questions ==
 
@@ -58,11 +56,11 @@ No. Everything runs inside WordPress.
 
 = Will it slow down my site? =
 
-Checks run in the background via WP-Cron. Visitors are not affected. Slow query detection uses `SAVEQUERIES` which does add overhead — only enable it when you need it.
+Checks run after the response is sent to the visitor (shutdown hook), so page speed is not affected. Slow query detection uses `SAVEQUERIES` which does add overhead — only enable it when you need it.
 
 = Can it monitor pages that require login? =
 
-Yes. In Settings, enable authenticated monitoring and pick a user account. The plugin creates temporary auth cookies (valid for 60 seconds) for each check.
+Yes. In Settings, tick the "Auth" checkbox next to any URL that requires login and pick a user account. The plugin creates temporary auth cookies (valid for 60 seconds) for those URLs.
 
 = What happens on uninstall? =
 

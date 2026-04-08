@@ -225,7 +225,7 @@ if ( $rev_ratio > 20 ) {
 				<tbody>
 					<?php foreach ( $page_errors as $err ) : ?>
 						<tr>
-							<td class="wpsp-nowrap"><?php echo esc_html( $err['created_at'] ); ?></td>
+							<td class="wpsp-nowrap"><?php echo esc_html( WPSP_Dashboard::to_local_time( $err['created_at'] ) ); ?></td>
 							<td class="wpsp-mono"><?php echo esc_html( $err['target'] ); ?></td>
 							<td>
 								<?php if ( null === $err['status_code'] ) : ?>
@@ -370,7 +370,7 @@ if ( $rev_ratio > 20 ) {
 				<tbody>
 					<?php foreach ( $slow_queries as $q ) : ?>
 						<tr>
-							<td class="wpsp-nowrap"><?php echo esc_html( $q['created_at'] ); ?></td>
+							<td class="wpsp-nowrap"><?php echo esc_html( WPSP_Dashboard::to_local_time( $q['created_at'] ) ); ?></td>
 							<td>
 								<span class="wpsp-sql-short" title="<?php echo esc_attr( $q['query_sql'] ); ?>">
 									<?php echo esc_html( mb_strimwidth( $q['query_sql'], 0, 100, '...' ) ); ?>
@@ -442,7 +442,7 @@ if ( $rev_ratio > 20 ) {
 				<tbody>
 					<?php foreach ( $alerts as $a ) : ?>
 						<tr>
-							<td class="wpsp-nowrap"><?php echo esc_html( $a['created_at'] ); ?></td>
+							<td class="wpsp-nowrap"><?php echo esc_html( WPSP_Dashboard::to_local_time( $a['created_at'] ) ); ?></td>
 							<td>
 								<span class="wpsp-badge wpsp-badge--<?php echo esc_attr( $a['alert_type'] ); ?>">
 									<?php echo esc_html( $a['alert_type'] ); ?>

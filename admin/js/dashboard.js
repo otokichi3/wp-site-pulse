@@ -293,7 +293,29 @@
 	 * We load the bundled one via import map when available,
 	 * otherwise fall back to a simple linear scale.
 	 */
+	/**
+	 * Append 'Z' to datetime strings so they are parsed as UTC.
+	 * DB stores UTC times like "2026-03-29 01:00:00" which browsers
+	 * interpret as local time without a timezone suffix.
+	 */
+	function fixUtcTimestamps() {
+		['page24h', 'page7d', 'db24h', 'db7d'].forEach(function (key) {
+			var data = wpspData[key];
+			Object.keys(data).forEach(function (series) {
+				data[series] = data[series].map(function (pt) {
+					return {
+						x: pt.x && pt.x.indexOf('Z') === -1 ? pt.x.replace(' ', 'T') + 'Z' : pt.x,
+						y: pt.y,
+					};
+				});
+			});
+		});
+	}
+
 	function initCharts() {
+		// Fix UTC timestamps before anything else.
+		fixUtcTimestamps();
+
 		// Check if time scale is available (requires date adapter).
 		// If not, we fall back to category scale using formatted labels.
 		var hasTimeScale = Chart.registry && Chart.registry.getScale && Chart.registry.getScale('time');
